@@ -17,6 +17,10 @@ const Buy = connection.define("buy", {
       deferrable: Sequelize.INITIALLY_IMMEDIATE,
     },
   },
+  status: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 Products.hasMany(Buy);
