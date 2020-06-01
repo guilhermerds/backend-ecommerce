@@ -9,14 +9,6 @@ const Buy = connection.define("buy", {
     allowNull: false,
     defaultValue: Sequelize.NOW,
   },
-  cpf: {
-    type: Sequelize.STRING,
-    references: {
-      model: Users,
-      key: "cpf",
-      deferrable: Sequelize.INITIALLY_IMMEDIATE,
-    },
-  },
   status: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -26,6 +18,10 @@ const Buy = connection.define("buy", {
 Products.hasMany(Buy);
 
 Buy.belongsTo(Products);
+
+Users.hasMany(Buy);
+
+Buy.belongsTo(Users);
 
 Buy.sync({ force: false });
 
