@@ -5,6 +5,7 @@ const Users = connection.define("users", {
   cpf: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   name: {
     type: Sequelize.STRING,
@@ -13,6 +14,7 @@ const Users = connection.define("users", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   pass: {
     type: Sequelize.STRING,
