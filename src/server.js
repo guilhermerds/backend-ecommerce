@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 const connection = require("./database/database");
+const router = require("./routes/index");
 
 connection
   .authenticate()
@@ -14,5 +15,7 @@ app.use(morgan("dev"));
 app.use(cors());
 
 app.use(express.json());
+
+app.use(router);
 
 app.listen(8080);
