@@ -1,5 +1,6 @@
 const User = require("../model/Users");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   async create(req, res) {
@@ -18,7 +19,7 @@ module.exports = {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(pass, salt);
 
-      User.create({
+      await User.create({
         cpf,
         name,
         email,
@@ -42,5 +43,26 @@ module.exports = {
     } else {
       res.json({ error: true, msg: "Um ou mais dados estão faltando" });
     }
+  },
+  async login(req, res) {
+    const { email, pass } = req.body;
+
+    await User.findOne({ where: { email } }).then((user) => {
+      if (user != undefined) {
+        const correct = bcrypt.compareSync(pass, user.pass);
+
+        if (correct) {
+          const token = jwt.sign(
+            { user: { cpf: user.cpf, id: user.id } },
+            process.env.JWT_PASS
+          );
+          res.json({ error: false, token });
+        } else {
+          res.json({ error: false, msg: "Email ou senha errados" });
+        }
+      } else {
+        res.json({ error: false, msg: "Email ou senha errados" });
+      }
+    });
   },
 };
