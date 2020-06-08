@@ -58,10 +58,10 @@ module.exports = {
           );
           res.json({ error: false, token });
         } else {
-          res.json({ error: false, msg: "Email ou senha errados" });
+          res.json({ error: true, msg: "Email ou senha errados" });
         }
       } else {
-        res.json({ error: false, msg: "Email ou senha errados" });
+        res.json({ error: true, msg: "Email ou senha errados" });
       }
     });
   },
