@@ -9,6 +9,7 @@ const Employees = connection.define("employees", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
   },
   pass: {
     type: Sequelize.STRING,
