@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const connection = require("./database/database");
 const router = require("./routes/index");
+const helmet = require("helmet");
 
 connection
   .authenticate()
@@ -11,6 +12,8 @@ connection
   .catch(() => console.log("Houve um erro na conexão!"));
 
 app.use(morgan("dev"));
+
+app.use(helmet());
 
 app.use(cors());
 
