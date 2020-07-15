@@ -26,7 +26,7 @@ module.exports = {
           res.json({
             error: true,
             msg:
-              "Não possuimos produtos com essas características, tente de outro jeito",
+              "Não possuímos produtos com essas características, tente de outro jeito",
           });
         }
       })
