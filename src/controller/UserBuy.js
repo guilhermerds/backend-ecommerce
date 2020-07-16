@@ -4,7 +4,7 @@ const Products = require("../model/Products");
 module.exports = {
   create(req, res) {
     const { id: userId } = req.user;
-    const { productId } = req.user.content;
+    const { productId } = req.body;
     const status = "Aguardando confirmação de pagamento";
 
     Buy.create({ productId, userId, status })
