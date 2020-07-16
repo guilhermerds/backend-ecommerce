@@ -65,4 +65,70 @@ module.exports = {
       }
     });
   },
+
+  update(req, res) {
+    const { id } = req.user;
+    const { name, email, pass, confirmation } = req.body;
+
+    User.findByPk(id)
+      .then((user) => {
+        if (user != undefined) {
+          const correct = bcrypt.compareSync(confirmation, user.pass);
+
+          if (correct) {
+            let fields;
+
+            if (name != undefined) {
+              fields = { ...fields, name };
+            }
+
+            if (email != undefined) {
+              fields = { ...fields, email };
+            }
+
+            if (pass != undefined) {
+              const salt = bcrypt.genSaltSync(10);
+              const hash = bcrypt.hashSync(pass, salt);
+              fields = { ...fields, pass: hash };
+            }
+
+            if (fields != undefined) {
+              User.update({ ...fields }, { where: { id } })
+                .then(() => {
+                  return res.json({
+                    error: false,
+                    msg: "Atualizado com sucesso",
+                  });
+                })
+                .catch(() => {
+                  return res.json({
+                    error: true,
+                    msg: "Ocorreu um erro na atualização",
+                  });
+                });
+            } else {
+              return res.json({
+                error: true,
+                msg: "Informe um dado para que seja atualizado",
+              });
+            }
+          } else {
+            return res.json({
+              error: true,
+              msg: "A senha que informou está incorreta",
+            });
+          }
+        } else {
+          return res.json({ error: true, msg: "Usuário não encontrado" });
+        }
+      })
+      .catch((err) => {
+        return res.json({
+          error: true,
+          msg: "Ocorreu um erro, tente novamente mais tarde",
+          id,
+          err,
+        });
+      });
+  },
 };
