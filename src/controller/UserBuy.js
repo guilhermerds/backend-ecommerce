@@ -42,4 +42,19 @@ module.exports = {
         });
       });
   },
+
+  show(req, res) {
+    const { id: userId } = req.user;
+
+    Buy.findAll({ where: { userId } })
+      .then((buy) => {
+        return res.json({ error: false, products: buy });
+      })
+      .catch(() => {
+        return res.json({
+          error: true,
+          msg: "Ocorreu um erro na exibição dos seus produtos",
+        });
+      });
+  },
 };
