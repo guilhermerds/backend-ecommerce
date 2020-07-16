@@ -3,7 +3,7 @@ const Products = require("../model/Products");
 
 module.exports = {
   create(req, res) {
-    const { id: userId } = req.user.user;
+    const { id: userId } = req.user;
     const { productId } = req.user.content;
     const status = "Aguardando confirmação de pagamento";
 

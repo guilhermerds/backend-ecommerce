@@ -13,7 +13,7 @@ module.exports = {
         });
       } else {
         if (decoded.user != undefined) {
-          req.user = { user: decoded.user, content };
+          req.user = { ...decoded.user, content };
           return next();
         } else {
           res.json({
@@ -36,7 +36,7 @@ module.exports = {
         });
       } else {
         if (decoded.employee != undefined) {
-          req.employee = { employee: decoded.employee, content };
+          req.employee = { ...decoded.employee, content };
           return next();
         } else {
           res.json({
