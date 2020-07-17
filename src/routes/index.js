@@ -8,6 +8,7 @@ const Cart = require("./public/Cart");
 const UserBuy = require("./user/Buy");
 const EmployeeBuy = require("./employee/Buy");
 const Categories = require("./employee/Categories");
+const EmployeeProducts = require("./employee/Products");
 
 router.use(Product);
 router.use(Shipping);
@@ -17,5 +18,6 @@ router.use(Cart);
 router.use(UserBuy);
 router.use(EmployeeBuy);
 router.use(Categories);
+router.use(EmployeeProducts);
 
 module.exports = router;
