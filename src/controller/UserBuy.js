@@ -4,10 +4,17 @@ const Products = require("../model/Products");
 module.exports = {
   create(req, res) {
     const { id: userId } = req.user;
-    const { productId } = req.body;
+    const { productId, cep } = req.body;
     const status = "Aguardando confirmação de pagamento";
 
-    Buy.create({ productId, userId, status })
+    if (productId == undefined || cep == undefined) {
+      return res.json({
+        error: true,
+        msg: "Informe o cep e a identificação do produto",
+      });
+    }
+
+    Buy.create({ productId, userId, status, cep })
       .then(() => {
         Products.findByPk(productId)
           .then((product) => {
