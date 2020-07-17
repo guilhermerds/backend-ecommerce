@@ -13,6 +13,10 @@ const Buy = connection.define("buy", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  cep: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 Products.hasMany(Buy);
