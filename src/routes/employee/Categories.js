@@ -10,5 +10,6 @@ router.delete(
   Middleware.employee,
   CategoriesController.delete
 );
+router.put("/categories", Middleware.employee, CategoriesController.update);
 
 module.exports = router;

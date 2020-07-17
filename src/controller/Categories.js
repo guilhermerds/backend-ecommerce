@@ -38,4 +38,29 @@ module.exports = {
         res.json({ error: true, msg: "Não foi possível excluír a categoria" });
       });
   },
+
+  update(req, res) {
+    const { title, id } = req.body;
+
+    if (title == undefined || id == undefined || isNaN(id)) {
+      return res.json({
+        error: true,
+        msg: "Informe o titulo e a identificação da categoria",
+      });
+    }
+
+    Categories.update({ title }, { where: { id } })
+      .then(() => {
+        return res.json({
+          error: false,
+          msg: "Categoria atualizada com sucesso",
+        });
+      })
+      .catch(() => {
+        return res.json({
+          error: true,
+          msg: "Ocorreu um erro, tente novamente mais tarde",
+        });
+      });
+  },
 };
