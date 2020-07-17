@@ -14,13 +14,20 @@ module.exports = {
       });
     }
 
-    Buy.create({ productId, userId, status, cep })
-      .then(() => {
-        Products.findByPk(productId)
-          .then((product) => {
-            const amount = product.amount - 1;
+    Products.findByPk(productId)
+      .then((product) => {
+        if (product.amount < 1) {
+          return res.json({
+            error: true,
+            msg: "Não unidades disponíveis para compra",
+          });
+        }
 
-            Products.update({ amount }, { where: { id: productId } })
+        const amount = product.amount - 1;
+
+        Products.update({ amount }, { where: { id: productId } })
+          .then(() => {
+            Buy.create({ productId, userId, status, cep })
               .then(() => {
                 return res.json({
                   error: false,
@@ -28,7 +35,7 @@ module.exports = {
                 });
               })
               .catch(() => {
-                return res.json({
+                res.json({
                   error: true,
                   msg:
                     "Ocorreu um erro com o pedido, tente novamente mais tarde",
@@ -43,7 +50,7 @@ module.exports = {
           });
       })
       .catch(() => {
-        res.json({
+        return res.json({
           error: true,
           msg: "Ocorreu um erro com o pedido, tente novamente mais tarde",
         });
