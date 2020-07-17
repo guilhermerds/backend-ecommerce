@@ -24,8 +24,10 @@ module.exports = {
     const { id, statusId } = req.body;
 
     if (
-      (id == undefined && !isNaN(id)) ||
-      (statusId == undefined && !isNaN(statusId))
+      id == undefined ||
+      isNaN(id) ||
+      statusId == undefined ||
+      isNaN(statusId)
     ) {
       return res.json({
         error: true,
