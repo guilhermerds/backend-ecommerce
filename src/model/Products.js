@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 const Employees = require("./Employees");
+const Categories = require("./Categories");
 
 const Products = connection.define("products", {
   amount: {
@@ -28,6 +29,10 @@ const Products = connection.define("products", {
 Employees.hasMany(Products);
 
 Products.belongsTo(Employees);
+
+Categories.hasMany(Products);
+
+Products.belongsTo(Categories);
 
 Products.sync({ force: false });
 
